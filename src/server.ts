@@ -1,11 +1,10 @@
 import * as http from 'http';
 import * as url from 'url';
-import { allPostsHandler } from './postsHandler';
 import { postRouter } from './postHandler';
+const routeRegex = /\/posts\//
 
 var server = http.createServer((request, response) => {
-	let parts = url.parse(String(request.url)).query;
-	if ((parts === 'posts/')) {
+	if (routeRegex.test(String(request.url))) {
 		postRouter(request, response);
 	} else {
 		response.writeHead(404, { 'Content-type': 'text/plain' });

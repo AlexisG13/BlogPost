@@ -1,4 +1,4 @@
-import { getHandler } from './postsHandler';
+import { getHandler } from './getHandler';
 
 export function postRouter(request: any, response: any) {
 	if (request.method === 'GET') {
