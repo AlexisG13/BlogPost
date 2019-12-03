@@ -2,8 +2,8 @@ import { clientConnection } from './db';
 const client = clientConnection();
 const singlePostRegex = /^\/posts\/([1-9]+)$/;
 
-export async function getHandler(request: any, response: any) {
-	const urlBody = String(request.url).match(singlePostRegex);
+export async function getHandler(req: any, res: any) {
+	const urlBody = String(req.url).match(singlePostRegex);
 	let post: string | string[];
 	if (urlBody !== null) {
 		const singlePost = await client.query(
@@ -19,6 +19,6 @@ export async function getHandler(request: any, response: any) {
 		);
 		post = allPosts.rows;
 	}
-	response.writeHead(200, { 'Content-Type': 'application/json' });
-	response.end(JSON.stringify({ post }));
+	res.writeHead(200, { 'Content-Type': 'application/json' });
+	res.end(JSON.stringify({ post }));
 }
