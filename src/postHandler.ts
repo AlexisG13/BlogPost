@@ -5,7 +5,6 @@ import * as querystring from 'querystring';
 
 export async function postHandler(req: any, res: any) {
     const parsed = url.parse(req.url);
-    console.log(parsed);
     const query = querystring.parse(String(parsed.query));
     await client.query(`INSERT INTO public.post(
         title, content, id_author,created_at)
