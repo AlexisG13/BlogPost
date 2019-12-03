@@ -1,6 +1,6 @@
 import { clientConnection } from './db';
 const client = clientConnection();
-const singlePostRegex = /^\/posts\/([1-9])+$/;
+const singlePostRegex = /^\/posts\/([1-9]+)$/;
 
 export async function getHandler(request: any, response: any) {
 	const urlBody = String(request.url).match(singlePostRegex);

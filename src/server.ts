@@ -1,7 +1,7 @@
 import * as http from 'http';
 import * as url from 'url';
-import { postRouter } from './postHandler';
-const routeRegex = /\/posts\//
+import { postRouter } from './postRouter';
+const routeRegex = /\/posts/
 
 var server = http.createServer((request, response) => {
 	if (routeRegex.test(String(request.url))) {

@@ -1,7 +1,15 @@
-import { getHandler } from './getHandler';
+import { clientConnection } from './db';
+const client = clientConnection();
+import * as url from 'url';
+import * as querystring from 'querystring';
 
-export function postRouter(request: any, response: any) {
-	if (request.method === 'GET') {
-		getHandler(request, response);
-	}
+export async function postHandler(req: any, res: any) {
+    const parsed = url.parse(req.url);
+    console.log(parsed);
+    const query = querystring.parse(String(parsed.query));
+    await client.query(`INSERT INTO public.post(
+        title, content, id_author)
+        VALUES ('${query['title']}', '${query['content']}',${query['id_author']});`);
+	res.writeHead(200, { 'Content-Type': 'text/plain' });
+	res.end('Post posted succesfully!');
 }
