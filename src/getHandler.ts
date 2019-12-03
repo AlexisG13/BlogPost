@@ -13,10 +13,12 @@ export async function getHandler(request: any, response: any) {
 		post = singlePost.rows[0];
 	} else {
 		const allPosts = await client.query(
-			'SELECT title, content FROM public.post'
+			`SELECT p.title, p.content, p.created_at , a.username FROM 
+			 public.post as p INNER JOIN public.author as a ON p.id_author = a.id
+			 ORDER BY p.created_at ASC`
 		);
 		post = allPosts.rows;
 	}
 	response.writeHead(200, { 'Content-Type': 'application/json' });
-	response.end(JSON.stringify({post}));
+	response.end(JSON.stringify({ post }));
 }
