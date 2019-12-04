@@ -3,7 +3,7 @@ import { ServerResponse, IncomingMessage } from 'http';
 import { buildSimpleResponse, buildObjectResponse } from '../responseUtils';
 import { getAllPostQuery, getSinglePostQuery } from '../database/queries';
 const client = clientConnection();
-const singlePostRegex = /^\/posts\/([1-9]+)$/;
+const singlePostRegex = /^\/posts\/([0-9]+)$/;
 const allPostRegex = /^\/posts\/$/;
 
 export async function getHandler(req: IncomingMessage, res: ServerResponse) {
