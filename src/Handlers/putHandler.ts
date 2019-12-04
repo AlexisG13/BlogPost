@@ -1,6 +1,7 @@
-import { clientConnection } from './db';
+import { clientConnection } from '../database/db';
 import { QueryResult } from 'pg';
 import { IncomingMessage, ServerResponse } from 'http';
+import { buildSimpleResponse, buildObjectResponse } from '../responseUtils';
 const client = clientConnection();
 const singlePostRegex = /^\/posts\/([0-9]+)/;
 
@@ -24,13 +25,11 @@ export async function putHandler(req: IncomingMessage, res: ServerResponse) {
 		updatedRow = await client.query(`${query},update_at = CURRENT_TIMESTAMP
 					 WHERE id=${postId[1]}
 					 RETURNING * ;`);
-		res.writeHead(200, { 'Content-Type': 'application/json' });
-		res.end(
-			JSON.stringify({
-				status: 200,
-				message: 'Post updated successfully',
-				updatedPost: updatedRow.rows[0]
-			})
-		);
+		if (updatedRow.rowCount === 0) {
+			buildSimpleResponse(404,'Post not found',res);
+		}
+		buildObjectResponse(200,'Post updated successfully',updatedRow.rows[0],res);
+	} else {
+		buildSimpleResponse(400,'Bad request',res);
 	}
 }

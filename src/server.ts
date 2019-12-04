@@ -1,14 +1,14 @@
 import * as http from 'http';
 import * as url from 'url';
 import { postRouter } from './postRouter';
+import { buildSimpleResponse } from './responseUtils';
 const routeRegex = /\/posts/
 
-var server = http.createServer((request, response) => {
-	if (routeRegex.test(String(request.url))) {
-		postRouter(request, response);
+var server = http.createServer((req, res) => {
+	if (routeRegex.test(String(req.url))) {
+		postRouter(req, res);
 	} else {
-		response.writeHead(404, { 'Content-type': 'application/json' });
-		response.end(JSON.stringify({status:400,message:'Resource not found'}));
+		buildSimpleResponse(404,'Resource not found',res);
 	}
 });
-server.listen(4000);
+server.listen(8080);

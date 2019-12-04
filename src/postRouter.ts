@@ -1,8 +1,9 @@
-import { getHandler } from './getHandler';
-import { postHandler } from './postHandler';
-import { putHandler } from './putHandler';
-import { deleteHandler } from './deleteHandler';
+import { getHandler } from './Handlers/getHandler';
+import { postHandler } from './Handlers/postHandler';
+import { putHandler } from './Handlers/putHandler';
+import { deleteHandler } from './Handlers/deleteHandler';
 import { IncomingMessage, ServerResponse } from 'http';
+import { buildSimpleResponse } from './responseUtils';
 
 export function postRouter(req: IncomingMessage, res: ServerResponse) {
 	switch (req.method) {
@@ -19,9 +20,6 @@ export function postRouter(req: IncomingMessage, res: ServerResponse) {
 			deleteHandler(req, res);
 			break;
 		default:
-			res.writeHead(501, { 'Content-Type': 'application/json' });
-			res.end(
-				JSON.stringify({ status: 501, message: 'Method not implemented' })
-			);
+			buildSimpleResponse(501,'Method not implemented',res);
 	}
 }
