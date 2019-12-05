@@ -1,7 +1,8 @@
 import { ServerResponse, IncomingMessage } from 'http';
-import { updateBody } from '../classes/interfaces';
 import { QueryResult } from 'pg';
+import { updateBody } from '../classes/interfaces';
 
+//Build a simple response with just a code and a message 
 export function buildSimpleResponse(
 	code: number,
 	message: string,
@@ -12,6 +13,7 @@ export function buildSimpleResponse(
 		.end(JSON.stringify({ status: code, message: message }));
 }
 
+// Build a response with a code, message, and a object
 export function buildObjectResponse(
 	code: number,
 	message: string,
@@ -23,6 +25,7 @@ export function buildObjectResponse(
 	res.end(JSON.stringify({ status: code, message: message, [`${keyName}`] : keyValue}));
 }
 
+//dsdsdsdsdsdsds
 export async function getBodyContent(
 	req: IncomingMessage
 ): Promise<updateBody> {
@@ -34,6 +37,7 @@ export async function getBodyContent(
 	return body;
 }
 
+//Function for counting the rows on a QueryResult, if the count is 0 then no rows were affected
 export async function countRows(queryResult: QueryResult, res: ServerResponse) {
 	if (queryResult.rowCount === 0)
 		buildSimpleResponse(404, 'Post not found', res);

@@ -6,6 +6,7 @@ import { IncomingMessage, ServerResponse } from 'http';
 import { buildSimpleResponse } from '../utils/responseUtils';
 import { PostHandler } from '../classes/classes';
 
+//Router for deciding which method should be called on the handler 
 export function postRouter(req: IncomingMessage, res: ServerResponse) {
 	const handler = new PostHandler();
 	switch (req.method) {

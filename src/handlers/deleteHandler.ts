@@ -7,6 +7,7 @@ const client = clientConnection();
 const singlePostRegex = /^\/posts\/([0-9]+)$/;
 const singleCommentRegex = /^\/posts\/([0-9]+)\/comments\/([0-9]+)/;
 
+// Function for deleting a post 
 export async function deleteHandler(req: any, res: any) {
 	try {
 		let query: QueryResult;
@@ -30,6 +31,7 @@ export async function deleteHandler(req: any, res: any) {
 	}
 }
 
+//Function for deleting a comment 
 export async function deleteComment(req: IncomingMessage, res: ServerResponse) {
 	try {
 		let urlPath = String(req.url).match(singleCommentRegex);

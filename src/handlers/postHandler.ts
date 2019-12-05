@@ -9,6 +9,7 @@ const client = clientConnection();
 const commentRegex = /^\/posts\/([0-9]+)\/?/;
 const postRegex = /^\/posts\/$/;
 
+//Function fot posting a post 
 export async function postHandler(
 	req: IncomingMessage,
 	res: ServerResponse
@@ -38,6 +39,7 @@ export async function postHandler(
 	}
 }
 
+//Function for creating a comment on a given post 
 export async function createComment(req: IncomingMessage, res: ServerResponse) {
 	try {
 		let data: string[] = [];

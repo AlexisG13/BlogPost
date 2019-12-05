@@ -1,10 +1,12 @@
+// File for saving all the neccesary queries used in the server
+// Query for getting all posts
 export const getAllPostQuery = `SELECT p.title, p.content, p.created_at , a.username , array_agg(DISTINCT c.content) as comments
 FROM public.post as p 
 INNER JOIN public.author as a ON p.id_author = a.id 
 LEFT JOIN (SELECT * FROM COMMENT) AS c ON c.id_post = p.id
 GROUP BY p.title, p.content, p.created_at, a.username
 ORDER BY p.created_at DESC`;
-
+// Query for getting a single post 
 export function getSinglePostQuery(id: string): string {
 	return `SELECT p.title, p.content, p.created_at , a.username , array_agg(DISTINCT c.content) as comments
     FROM public.post as p 
@@ -12,7 +14,7 @@ export function getSinglePostQuery(id: string): string {
     LEFT JOIN (SELECT * FROM COMMENT) AS c ON c.id_post = p.id AND p.id = ${id} 
     GROUP BY p.title, p.content, p.created_at, a.username`;
 }
-
+// Inserting a comment
 export function insertCommentQuery(
 	content: string,
 	author: string,
@@ -23,7 +25,7 @@ export function insertCommentQuery(
         VALUES ('${content}',${author},${id_post},CURRENT_TIMESTAMP,CURRENT_TIMESTAMP) 
         RETURNING content , id_author , id_post , created_at;`;
 }
-
+// Inserting a post 
 export function insertPostQuery(
 	title: string,
 	content: string,
@@ -35,7 +37,7 @@ export function insertPostQuery(
 		CURRENT_TIMESTAMP,CURRENT_TIMESTAMP)
 		RETURNING *;`;
 }
-
+// Updating a post 
 export function updateQuery(fields: object, postId: string): string {
 	let query = `UPDATE post SET `;
 	Object.entries(fields).forEach(([key, value]) => {
@@ -46,20 +48,20 @@ export function updateQuery(fields: object, postId: string): string {
 							RETURNING * ;`;
 	return query;
 }
-
+// Getting all comments
 export function allCommentsQuery(id_post: string): string {
 	return `SELECT c.content as comment , a.name as user , c.created_at as date_created 
 					FROM comment as c 
 					INNER JOIN author as a ON c.id_author = a.id AND c.id_post = ${id_post};`;
 }
-
+// Deleting a comment
 export function deleteCommentQuery(
 	id_comment: string
 ): string {
 	return `DELETE FROM comment 
 					WHERE id=${id_comment}`;
 }
-
+// Updating a comment 
 export function updateCommentQuery(
 	id_comment: string,
 	content: string

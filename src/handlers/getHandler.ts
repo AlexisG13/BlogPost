@@ -16,6 +16,7 @@ const singlePostRegex = /^\/posts\/([0-9]+)$/;
 const commentRegex = /^\/posts\/([0-9]+)\/?/;
 const allPostRegex = /^\/posts\/$/;
 
+//Function for getting all posts or a single post, depeneding on the url path
 export async function getHandler(req: IncomingMessage, res: ServerResponse) {
 	try {
 		const urlBody = String(req.url).match(singlePostRegex);
@@ -47,6 +48,7 @@ export async function getHandler(req: IncomingMessage, res: ServerResponse) {
 	}
 }
 
+// Function for getting all comments 
 export async function getAllComments(
 	req: IncomingMessage,
 	res: ServerResponse

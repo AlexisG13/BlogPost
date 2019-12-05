@@ -12,6 +12,7 @@ const client = clientConnection();
 const singleCommentRegex = /^\/posts\/([0-9]+)\/comments\/([0-9]+)/;
 const singlePostRegex = /^\/posts\/([0-9]+)/;
 
+//Function for updating a post 
 export async function putHandler(req: IncomingMessage, res: ServerResponse) {
 	const urlMatch = String(req.url).match(singlePostRegex);
 	try {
@@ -44,6 +45,7 @@ export async function putHandler(req: IncomingMessage, res: ServerResponse) {
 	}
 }
 
+//Function for updating a comment 
 export async function updateComment(req: IncomingMessage, res: ServerResponse) {
 	try {
 		let data: string[] = [];

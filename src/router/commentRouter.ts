@@ -2,6 +2,7 @@ import { IncomingMessage, ServerResponse } from 'http';
 import { CommentHandler } from '../classes/classes';
 import { buildSimpleResponse } from '../utils/responseUtils';
 
+//Router for deciding which method should be called on the handler 
 export function commentRouter(req: IncomingMessage, res: ServerResponse) {
 	const handler = new CommentHandler();
 	switch (req.method) {

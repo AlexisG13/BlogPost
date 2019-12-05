@@ -1,4 +1,4 @@
-export interface updateBody {
-	title?: string;
-	content?: string;
+export interface updateBody{
+  title?:string;
+  content?:string;
 }
