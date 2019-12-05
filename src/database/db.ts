@@ -8,6 +8,6 @@ const client = new Client({
 	port: 5432
 });
 client.connect();
-export function clientConnection():Client{
+export function clientConnection(): Client {
 	return client;
 }

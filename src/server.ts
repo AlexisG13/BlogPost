@@ -1,14 +1,19 @@
 import * as http from 'http';
-import { postRouter } from './postRouter';
+import { postRouter } from './router/postRouter';
 import { buildSimpleResponse } from './utils/responseUtils';
-const routeRegex = /\/posts/
+import { commentRouter } from './router/commentRouter';
+const postRegex = /\/posts/;
+const commentRegex = /\/posts\/[0-9]+\/comments/;
 
 var server = http.createServer((req, res) => {
-	if (routeRegex.test(String(req.url))) {
+	if (commentRegex.test(String(req.url))) {
+		commentRouter(req, res);
+	} else if (postRegex.test(String(req.url))) {
 		postRouter(req, res);
 	} else {
-		buildSimpleResponse(404,'Resource not found',res);
+		buildSimpleResponse(404, 'Resource not found', res);
 	}
 });
-const port = process.env.PORT||8080;
+const port = 8080;
+console.log(`Listening on port ${port}`);
 server.listen(port);
