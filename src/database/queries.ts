@@ -13,17 +13,36 @@ export function getSinglePostQuery(id: string): string {
     GROUP BY p.title, p.content, p.created_at, a.username`;
 }
 
-export function insertCommentQuery(content:string,author:string,id_post:string):string{
-    return `INSERT INTO comment(
+export function insertCommentQuery(
+	content: string,
+	author: string,
+	id_post: string
+): string {
+	return `INSERT INTO comment(
         content,id_author,id_post)
         VALUES ('${content}',${author},${id_post}) 
-        RETURNING *;`
+        RETURNING *;`;
 }
 
-export function insertPostQuery(title:string,content:string,id_author:string):string{
-    return `INSERT INTO post(
+export function insertPostQuery(
+	title: string,
+	content: string,
+	id_author: string
+): string {
+	return `INSERT INTO post(
         title, content, id_author,created_at,update_at)
 		VALUES ('${title}', '${content}',${id_author},
 		CURRENT_TIMESTAMP,CURRENT_TIMESTAMP)
-		RETURNING *;`
+		RETURNING *;`;
+}
+
+export function serializeJSON(fields: object, postId: string): string {
+	let query = `UPDATE post SET `;
+	Object.entries(fields).forEach(([key, value]) => {
+		query += `${key} = ${value},`;
+	});
+	query += `update_at = CURRENT_TIMESTAMP
+              WHERE id=${postId}
+	    	  RETURNING * ;`;
+	return query;
 }

@@ -3,7 +3,7 @@ import { postHandler } from './Handlers/postHandler';
 import { putHandler } from './Handlers/putHandler';
 import { deleteHandler } from './Handlers/deleteHandler';
 import { IncomingMessage, ServerResponse } from 'http';
-import { buildSimpleResponse } from './responseUtils';
+import { buildSimpleResponse } from './utils/responseUtils';
 
 export function postRouter(req: IncomingMessage, res: ServerResponse) {
 	switch (req.method) {
@@ -20,6 +20,6 @@ export function postRouter(req: IncomingMessage, res: ServerResponse) {
 			deleteHandler(req, res);
 			break;
 		default:
-			buildSimpleResponse(501,'Method not implemented',res);
+			buildSimpleResponse(501, 'Method not implemented', res);
 	}
 }

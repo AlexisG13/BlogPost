@@ -1,7 +1,6 @@
 import * as http from 'http';
-import * as url from 'url';
 import { postRouter } from './postRouter';
-import { buildSimpleResponse } from './responseUtils';
+import { buildSimpleResponse } from './utils/responseUtils';
 const routeRegex = /\/posts/
 
 var server = http.createServer((req, res) => {
@@ -11,4 +10,5 @@ var server = http.createServer((req, res) => {
 		buildSimpleResponse(404,'Resource not found',res);
 	}
 });
-server.listen(8080);
+const port = process.env.PORT||8080;
+server.listen(port);
